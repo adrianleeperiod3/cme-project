@@ -1,12 +1,23 @@
 import csv
 import bisect 
 import numpy as np
+from numpy.linalg import matrix_power 
 
 with open("data.csv") as f:
     data=[tuple(line) for line in csv.reader(f)]
 
 ordered_transactions = [] #orders objects with respect to transaction number
 t_b_c = [] #orders purchased-item objects by individual users
+
+key = []
+for cust,trans,item in data:
+    count = 0
+    for i in range (len(key)):
+        if key[i] == item:
+            count += 1
+    if count == 0:
+         key.append(item)
+print(f"Key: \n{key}")
 
 def extract_int(str): #pulls an int out of a given string
     r = []
@@ -50,16 +61,6 @@ def transactions_by_customer(): #creates an array to order each individuals sequ
 def create_Transition_Martix(): #creates the Markov Matrix
     order_by_transaction()
     transactions_by_customer()
-
-    key = []
-    for cust,trans,item in data:
-        count = 0
-        for i in range (len(key)):
-            if key[i] == item:
-                count += 1
-        if count == 0:
-            key.append(item)
-    print(f"Key: {key}")
     
     matrix = np.zeros([len(key),len(key)], dtype = float)
     state_count = [0] * len(key)
@@ -75,11 +76,35 @@ def create_Transition_Martix(): #creates the Markov Matrix
             if(state_count[row] != 0):
                 matrix[row][column] /= state_count[row]
                 matrix[row][column] = round(matrix[row][column],2)
-    print(f"Transition Matrix: \n{matrix}")
     return matrix
             
 
-create_Transition_Martix()
+
+def item_candidates(item,int):
+    m = create_Transition_Martix()
+    master_list = []
+    n = 0
+    for n in range(1,int+1):
+        m = matrix_power(m, n)
+        avg_prob = 0
+        for row in range(len(m)):
+            for column in range(len(m)):
+                avg_prob += m[row][column]
+        avg_prob = avg_prob/pow((len(m)),2)
+
+        key_index = key.index(item)
+        list = []
+        for i in range(len(m)):
+            item_and_prob = [key[i],round(m[key_index][i],3)]
+            if item_and_prob[1] > avg_prob:
+                list.append(item_and_prob)
+        master_list.append(list)
+    return(master_list)
+
+   
+    
+item = "Soybeans"
+print(f"List of Item Candidates Given {item}: \n{item_candidates(item,3)}")
 
 
 
