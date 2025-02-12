@@ -10,7 +10,7 @@ ordered_transactions = [] #orders objects with respect to transaction number
 t_b_c = [] #orders purchased-item objects by individual users
 
 key = []
-for cust,trans,item in data:
+for cust,trans,item, in data:
     count = 0
     for i in range (len(key)):
         if key[i] == item:
