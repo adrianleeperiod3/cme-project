@@ -76,6 +76,7 @@ def create_Transition_Martix(): #creates the Markov Matrix
             if(state_count[row] != 0):
                 matrix[row][column] /= state_count[row]
                 matrix[row][column] = round(matrix[row][column],2)
+    print(matrix)
     return matrix
             
 

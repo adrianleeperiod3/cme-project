@@ -34,7 +34,7 @@ for i in range(len(data)):
             month_decimal = float(tempDate[8:])/31.0
         except:
             month_decimal = float(tempDate[8:])/29.0
-    masterList.append([data[i][3], round((int(tempDate[5:7])-1+month_decimal),1)])
+    masterList.append([data[i][3], round((int(tempDate[5:7])-1+month_decimal))])
 
 
 soybean_list = []
@@ -44,7 +44,6 @@ for i in range(len(masterList)):
 
 
 plt.hist(soybean_list,12,[0,12],False)
-plt.show()
 
 def getMaximums(list):
     maxes = []
@@ -53,7 +52,7 @@ def getMaximums(list):
             maxes.append(i+1)
     return maxes
 
-print(getMaximums(soybean_list))
+print(soybean_list)
 
 
     
