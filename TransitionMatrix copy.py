@@ -3,6 +3,7 @@ import bisect
 import numpy as np
 from numpy.linalg import matrix_power 
 import statistics
+import datetime
 
 with open("datafull.csv") as f:
     data=[tuple(line) for line in csv.reader(f)]
@@ -70,17 +71,21 @@ def transactions_by_customer(): #creates an array to order each individuals sequ
 
 def three_sigma_rule():
     for n in range(len(t_b_c)):
-        purchase_intervals = []
-        index_to_split = []
-        for i in range(len(t_b_c[n])-1):
-            if i > 1:
-                purchase_intervals.append(days_between_dates(t_b_c[n][i][1],t_b_c[n][i+1][1]))
-        if len(purchase_intervals) > 1:
-            upper_limit = statistics.mean(purchase_intervals) + statistics.stdev(purchase_intervals)
-        for i in range(len(purchase_intervals)):
-            if purchase_intervals[i] > upper_limit:
-                index_to_split.append(i)
-        
+        for i in range(len(t_b_c[n])):
+            print(n, t_b_c[n][i])
+
+        # purchase_intervals = []
+        # index_to_split = []
+        # for i in range(len(t_b_c[n])-1):
+        #     if i == 0:
+        #         print(t_b_c[n][i][1])
+        #     else:
+        #         purchase_intervals.append(days_between_dates(t_b_c[n][i][1],t_b_c[n][i+1][1]))
+        # if len(purchase_intervals) > 1:
+        #     upper_limit = statistics.mean(purchase_intervals) + statistics.stdev(purchase_intervals)
+        # for i in range(len(purchase_intervals)):
+        #     if purchase_intervals[i] > upper_limit:
+        #         index_to_split.append(i)
 
 
 
@@ -139,6 +144,6 @@ def three_sigma_rule():
 order_by_date()
 transactions_by_customer()
 three_sigma_rule()
-print(t_b_c)
+# print()
 
 
