@@ -71,6 +71,7 @@ def transactions_by_customer(): #creates an array to order each individuals sequ
 def three_sigma_rule():
     for n in range(len(t_b_c)):
         purchase_intervals = []
+        index_to_split = []
         for i in range(len(t_b_c[n])-1):
             if i > 1:
                 purchase_intervals.append(days_between_dates(t_b_c[n][i][1],t_b_c[n][i+1][1]))
@@ -78,13 +79,16 @@ def three_sigma_rule():
             upper_limit = statistics.mean(purchase_intervals) + statistics.stdev(purchase_intervals)
         for i in range(len(purchase_intervals)):
             if purchase_intervals[i] > upper_limit:
-                
+                index_to_split.append(i)
+        
+
+
 
         
 
             
 # def create_Transition_Martix(): #creates the Markov Matrix
-#     order_by_transaction()
+#     order_by_date()
 #     transactions_by_customer()
     
 #     matrix = np.zeros([len(key),len(key)], dtype = float)
@@ -135,7 +139,6 @@ def three_sigma_rule():
 order_by_date()
 transactions_by_customer()
 three_sigma_rule()
-
-
+print(t_b_c)
 
 
