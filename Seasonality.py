@@ -19,40 +19,32 @@ for cust,trans,type,item,date,quantity,price,value in data:
          key.append(item)
 print(f"Key: \n{key}")
 
-masterList = []
-thirty_one_day_months = [1,3,5,7,8,10,12]
-thirty_day_months = [4,6,9,11]
-for i in range(len(data)):
-    tempDate = data[i][4]
-    month_decimal = 0
-    try:
-        thirty_one_day_months.index(int(tempDate[5:7]))
-        month_decimal = float(tempDate[8:])/32.0
-    except:
-        try:
-            thirty_day_months.index(int(tempDate[5:7]))
-            month_decimal = float(tempDate[8:])/31.0
-        except:
-            month_decimal = float(tempDate[8:])/29.0
-    masterList.append([data[i][3], round((int(tempDate[5:7])-1+month_decimal))])
+def establish_monthly_patterns():
+    master = []
+    for temp_item in key:
+        temp_freq_list = [0]*12
+        preferred_months = []
+        temp_addition = []
+        for cust,trans,type,item,date,quantity,price,value in data:
+            if item == temp_item:
+                temp_freq_list[int(date[5:7])-1] += 1
+           
+        augmented_list = []
+        augmented_list.append(temp_freq_list[11])
+        for i in range(len(temp_freq_list)):
+            augmented_list.append(temp_freq_list[i])
+        augmented_list.append(temp_freq_list[0])
+        for i in range (len(augmented_list)-1):
+            if i > 0 and augmented_list[i-1] < augmented_list[i] and augmented_list[i] > augmented_list[i+1]:
+                preferred_months.append(i)
+        temp_addition.append(temp_item)
+        temp_addition.append(preferred_months)
+        master.append(temp_addition)
+        print(temp_addition)
+    return master
 
+establish_monthly_patterns()
 
-soybean_list = []
-for i in range(len(masterList)):
-    if masterList[i][0] == "Soybeans":
-        soybean_list.append(masterList[i][1])
-
-
-plt.hist(soybean_list,12,[0,12],False)
-
-def getMaximums(list):
-    maxes = []
-    for i in range(len(list)-2):
-        if list[i] < list[i+1] and list[i+1] > list[i+2]:
-            maxes.append(i+1)
-    return maxes
-
-print(soybean_list)
 
 
     
