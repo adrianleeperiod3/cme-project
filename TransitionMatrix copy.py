@@ -3,7 +3,7 @@ import bisect
 import numpy as np
 from numpy.linalg import matrix_power 
 import statistics
-import datetime
+from datetime import datetime
 
 with open("datafull.csv") as f:
     data=[tuple(line) for line in csv.reader(f)]
@@ -34,8 +34,6 @@ def occurances(int): #counts the occurances of a given int within ordered_transa
             occurances += 1
     return occurances
 
-from datetime import datetime
-
 def days_between_dates(date1_str, date2_str):
     date1 = datetime.strptime(date1_str, "%Y-%m-%d")
     date2 = datetime.strptime(date2_str, "%Y-%m-%d")
@@ -59,7 +57,7 @@ def transactions_by_customer(): #creates an array to order each individuals sequ
     for i in range (len(ordered_transactions)):
         temp_cust = ordered_transactions[i][0]
         if occurances(temp_cust) == 1:
-            t_b_c.append([ordered_transactions[i][1],ordered_transactions[i][2]])
+            t_b_c.append([[ordered_transactions[i][1],ordered_transactions[i][2]]])
         else:
             tempItems = []
             for j in range (len(ordered_transactions)):
@@ -71,30 +69,36 @@ def transactions_by_customer(): #creates an array to order each individuals sequ
 
 def three_sigma_rule():
     for n in range(len(t_b_c)):
+        purchase_intervals = []
+        index_to_split = []
+        for i in range(len(t_b_c[n])-1):
+            purchase_intervals.append(days_between_dates(t_b_c[n][i][1],t_b_c[n][i+1][1]))
+        if len(purchase_intervals) > 1:
+            upper_limit = statistics.mean(purchase_intervals) + statistics.stdev(purchase_intervals)
+        for i in range(len(purchase_intervals)):
+            if purchase_intervals[i] > upper_limit:
+                index_to_split.append(i)
+        newT = []
+        temp_list = []
         for i in range(len(t_b_c[n])):
-            print(n, t_b_c[n][i])
+            for j in purchase_intervals:
+                if i != j:
+                    temp_list.append(t_b_c[n][i][0])
+                else:
+                    newT.append(temp_list)
+                    temp_list.clear()
+                newT.append(temp_list)
+        t_b_c[n] = newT
 
-        # purchase_intervals = []
-        # index_to_split = []
-        # for i in range(len(t_b_c[n])-1):
-        #     if i == 0:
-        #         print(t_b_c[n][i][1])
-        #     else:
-        #         purchase_intervals.append(days_between_dates(t_b_c[n][i][1],t_b_c[n][i+1][1]))
-        # if len(purchase_intervals) > 1:
-        #     upper_limit = statistics.mean(purchase_intervals) + statistics.stdev(purchase_intervals)
-        # for i in range(len(purchase_intervals)):
-        #     if purchase_intervals[i] > upper_limit:
-        #         index_to_split.append(i)
-
-
-
-        
-
-            
-# def create_Transition_Martix(): #creates the Markov Matrix
+order_by_date()
+transactions_by_customer()
+three_sigma_rule()
+print(t_b_c)
+      
+# def create_Transition_Matrix(): #creates the Markov Matrix
 #     order_by_date()
 #     transactions_by_customer()
+#     three_sigma_rule()
     
 #     matrix = np.zeros([len(key),len(key)], dtype = float)
 #     state_count = [0] * len(key)
@@ -116,7 +120,7 @@ def three_sigma_rule():
 
 
 # def item_candidates(item,int):
-#     m = create_Transition_Martix()
+#     m = create_Transition_Matrix()
 #     master_list = []
 #     n = 0
 #     for n in range(1,int+1):
@@ -141,9 +145,6 @@ def three_sigma_rule():
 # item = "Soybeans"
 # print(f"List of Item Candidates Given {item}: \n{item_candidates(item,3)}")
 
-order_by_date()
-transactions_by_customer()
-three_sigma_rule()
-# print()
+
 
 

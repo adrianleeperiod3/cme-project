@@ -103,10 +103,10 @@ def item_candidates(item,int):
     return(master_list)
 
    
-    
+
 item = "Soybeans"
 print(f"List of Item Candidates Given {item}: \n{item_candidates(item,3)}")
-
+print(t_b_c)
 
 
 
