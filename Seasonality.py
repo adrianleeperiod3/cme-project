@@ -17,7 +17,6 @@ for cust,trans,type,item,date,quantity,price,value in data:
             count += 1
     if count == 0:
          key.append(item)
-print(f"Key: \n{key}")
 
 def establish_monthly_patterns():
     master = []
@@ -40,10 +39,8 @@ def establish_monthly_patterns():
         temp_addition.append(temp_item)
         temp_addition.append(preferred_months)
         master.append(temp_addition)
-        print(temp_addition)
     return master
 
-establish_monthly_patterns()
 
 
 
