@@ -75,7 +75,7 @@ def best_candidates(list,future_steps,date):
             if step[i][1] > highest_score:
                 highest_score = step[i][1]
                 highest_score_index = i
-        best_list.append(step[highest_score_index])
+        best_list.append(step[highest_score_index][0])
     return(best_list)
         
 
