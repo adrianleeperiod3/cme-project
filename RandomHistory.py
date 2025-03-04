@@ -16,7 +16,7 @@ def create_random_transactions(amount):
     agriculture = ["Live_Cattle","Wheat","Soybeans","Lean_Hogs"]
     thirty_one_days = [1,3,5,7,8,10,12]
     thirty_days = [4,6,9,11]
-    for i in range(amount):
+    for i in range(int(amount)):
         temp_trans = []
         temp_trans.append("CUSTUSER")
         temp_trans.append(f"TXN{str(i+1).zfill(3)}")
@@ -67,6 +67,6 @@ def create_random_transactions(amount):
         transactions.append(temp_trans)
     return transactions
 
-
+print(create_random_transactions(10))
 
     

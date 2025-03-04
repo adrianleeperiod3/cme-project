@@ -4,7 +4,6 @@ import numpy as np
 from numpy.linalg import matrix_power 
 import pandas as pd
 import matplotlib.pyplot as plt
-from numpy import *
 
 with open("datafull.csv") as f:
     data=[tuple(line) for line in csv.reader(f)]
