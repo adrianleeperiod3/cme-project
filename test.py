@@ -1,5 +1,8 @@
 import streamlit as st
 from RandomHistory import create_random_transactions
+from CorrellationScores import best_candidates
+import numpy as np
+from RandomHistory import today
 
 st.title("Bundling Software")
 
@@ -9,6 +12,7 @@ risk_level = st.sidebar.selectbox("Trading Risk Level: ",['Safe','Risky','View B
 
 
 h = create_random_transactions(history_length)
+bundle = best_candidates(h,3,today)
 if st.sidebar.button("Apply Preferences"):
-    for i in range(int(history_length)):
-        st.write(f"Purchase {i+1}: {h[i][2]} on {h[i][4]} \n")
+    for i in range(len(bundle)):
+        st.write(f"Purchase {i+1}: {bundle[i][0]} \n")

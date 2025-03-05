@@ -49,9 +49,10 @@ def get_grouping_scores(list):
             options_score += 1
         else:
             agriculture_score += 1
-    futures_score = round(futures_score / len(list),3)
-    options_score = round(options_score / len(list),3)
-    agriculture_score = round(agriculture_score / len(list),3)
+    if len(list) > 0:
+        futures_score = round(futures_score / len(list),3)
+        options_score = round(options_score / len(list),3)
+        agriculture_score = round(agriculture_score / len(list),3)
     return([futures_score,options_score,agriculture_score])
 
 def best_candidates(list,future_steps,date):
