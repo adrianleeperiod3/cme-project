@@ -67,6 +67,6 @@ def create_random_transactions(amount):
         transactions.append(temp_trans)
     return transactions
 
-print(create_random_transactions(10))
+
 
     

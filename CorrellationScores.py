@@ -33,7 +33,9 @@ def get_seasonality_score(list):
                 pattern_id = i
         if int(trans[4][5:7]) in patterns[pattern_id][1]:
             score +=1 
-    return(round(score/len(list),3))
+    if len(list) > 0:
+        return(round(score/len(list),3))
+    return 0
 
 def get_grouping_scores(list):
     futures = ["Natural_Gas","Corn","Crude_Oil","S&P500_Call","Gold","S&P500"]
