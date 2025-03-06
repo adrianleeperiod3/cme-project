@@ -7,12 +7,13 @@ from RandomHistory import today
 st.title("Bundling Software")
 
 st.sidebar.title("User Preferences")
-history_length = st.sidebar.number_input("Number of Simulated Transactions:", min_value=0, step=1)
+history_length = st.sidebar.number_input("Number of Simulated Transactions:", min_value=1, step=1)
 risk_level = st.sidebar.selectbox("Trading Risk Level: ",['Safe','Risky','View Both'])
 
+date = (f"{today.year}-{str(today.month).zfill(2)}-{str(today.day).zfill(2)}")
 
-h = create_random_transactions(history_length)
-bundle = best_candidates(h,3,today)
 if st.sidebar.button("Apply Preferences"):
+    h = create_random_transactions(history_length)
+    bundle = best_candidates(h,3,date)
     for i in range(len(bundle)):
         st.write(f"Purchase {i+1}: {bundle[i][0]} \n")
