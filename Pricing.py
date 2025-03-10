@@ -35,14 +35,18 @@ def generate_prices(b):
         temp_addition.append(score)
         temp_addition.append(t)
         prices.append(temp_addition)
-    print(prices)
-    for i in range(len(prices)):
-        for j in range(len(prices)):
-            if prices[j][0] == prices[i][0] and i != j :
-                prices.pop(j)
     return prices
 
+def get_amounts(list,budget):
+    corr_sum = 0
+    item_and_pricing = []
+    for i in range(len(list)):
+      item_and_pricing.append([list[i][0]])
+      corr_sum += list[i][1]
+    for i in range(len(item_and_pricing)):
+        print(int(((list[i][1]/corr_sum)*budget/list[i][2])+.5))
+        item_and_pricing[i].append(int(((list[i][1]/corr_sum)*budget/list[i][2])+.5))
 
-
-print(generate_prices(best_candidates(create_random_transactions(3),3,date)))
-
+    return (item_and_pricing)
+    
+print(get_amounts(generate_prices(best_candidates(create_random_transactions(3),3,date)),500))
