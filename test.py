@@ -3,6 +3,7 @@ from RandomHistory import create_random_transactions
 from CorrellationScores import best_candidates
 import numpy as np
 from RandomHistory import today
+from Pricing import get_amounts
 
 st.title("Bundling Software")
 
@@ -16,5 +17,6 @@ date = (f"{today.year}-{str(today.month).zfill(2)}-{str(today.day).zfill(2)}")
 if st.sidebar.button("Apply Preferences"):
     h = create_random_transactions(history_length)
     bundle = best_candidates(h,3,date)
-    for i in range(len(bundle)):
-        st.write(f"Purchase {i+1}: {bundle[i][0]} \n")
+    amounts = get_amounts(bundle,budget)
+    for i in range(len(amounts)):
+        st.write(f"Purchase {i+1}: {amounts[i][1]} contracts of {amounts[i][0]} \n")
