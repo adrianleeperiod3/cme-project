@@ -18,5 +18,8 @@ if st.sidebar.button("Apply Preferences"):
     h = create_random_transactions(history_length)
     bundle = best_candidates(h,3,date)
     amounts = get_amounts(bundle,budget)
-    for i in range(len(amounts)):
-        st.write(f"Purchase {i+1}: {amounts[i][1]} contracts of {amounts[i][0]} \n")
+    if amounts == "Budget Too Low To Support Bundle Purchases":
+            st.write(amounts)
+    else:
+        for i in range(len(amounts)): 
+            st.write(f"Purchase {i+1}: {amounts[i][1]} contracts of {amounts[i][0]} \n")

@@ -39,16 +39,18 @@ def generate_prices(b):
         prices.append(temp_addition)
     return prices
 
-def trim(list):
-    print(list)
-    for i in range((len(list))+1):
-        if list[i][0] == list[i+1][0]:
-            list[i][1] += list[i+1][1]
-            list.pop(i+1)
-        if list[i][1] == 0:
-            list.pop(i)
-    print(list)
-    return(list)
+def trim(l):
+    print(l)
+    g = []
+    for i in range(len(l)):
+        if l[i][1] != 0:
+            g.append(l[i])  
+        for i in range(len(g)):
+            for j in range(len(g)):
+                if g[i][0] == g[j][0] and i != j:
+                    g.pop(i)
+    print(g)
+    return(g)
 
 def get_amounts(list,budget):
     corr_sum = 0
@@ -80,7 +82,11 @@ def get_amounts(list,budget):
             return("Budget Too Low To Support Bundle Purchases")
         else:
             item_and_pricing[len(item_and_pricing)-1][1] -= 1
-    return (trim(item_and_pricing))
+    f = trim(item_and_pricing)
+    if f == []:
+        return("Budget Too Low To Support Bundle Purchases")
+    else:
+        return(f)
     
 
 
