@@ -114,25 +114,33 @@ if st.sidebar.button("Apply Preferences"):
     if risk_level == 'Safe':
         amounts = get_amounts(best_candidates(h,5,date),.75*budget)
         if amounts == []:
-            st.subheader("Budget is too low to support safe bundle purchases. Please hit 'Apply Preferences' again.")
+            while (amounts == []):
+                amounts = get_amounts(best_candidates(h,5,date),.75*budget)
+            safe_bundle(amounts)
         else:
             safe_bundle(amounts)
     elif risk_level == 'Risky':
         amounts = get_amounts(best_candidates_risky(h,5,date),budget)
         if amounts == []:
-            st.subheader("Budget is too low to support risky bundle purchases. Please hit 'Apply Preferences' again.")
+            while (amounts == []):
+                amounts = get_amounts(best_candidates_risky(h,5,date),budget)
+            risky_bundle(amounts)
         else:
             risky_bundle(amounts)
     else:
         amounts_safe = get_amounts(best_candidates(h,5,date),.75*budget)
         amounts_risky= get_amounts(best_candidates_risky(h,5,date),budget)
         if amounts_safe == []:
-            st.subheader("Budget is too low to support safe bundle purchases. Please hit 'Apply Preferences' again.")
+            while (amounts_safe == []):
+                amounts = get_amounts(best_candidates(h,5,date),.75*budget)
+            safe_bundle(amounts)
         else:
             safe_bundle(amounts_safe)
         st.divider()
         if amounts_risky == []:
-            st.subheader("Budget is too low to support risky bundle purchases. Please hit 'Apply Preferences' again.")
+            while (amounts_risky == []):
+                amounts = get_amounts(best_candidates_risky(h,5,date),budget)
+            risky_bundle(amounts)
         else:
             risky_bundle(amounts_risky)
     st.divider()
