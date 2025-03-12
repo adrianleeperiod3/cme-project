@@ -114,33 +114,25 @@ if st.sidebar.button("Apply Preferences"):
     if risk_level == 'Safe':
         amounts = get_amounts(best_candidates(h,5,date),.75*budget)
         if amounts == []:
-            while (amounts == []):
-                amounts = get_amounts(best_candidates(h,5,date),.75*budget)
-            safe_bundle(amounts)
+            st.write("Budget too low to generate safe bundle. Please hit 'Apply Preferences' again.")
         else:
             safe_bundle(amounts)
     elif risk_level == 'Risky':
         amounts = get_amounts(best_candidates_risky(h,5,date),budget)
         if amounts == []:
-            while (amounts == []):
-                amounts = get_amounts(best_candidates_risky(h,5,date),budget)
-            risky_bundle(amounts)
+            st.write("Budget too low to generate risky bundle. Please hit 'Apply Preferences' again.")
         else:
             risky_bundle(amounts)
     else:
         amounts_safe = get_amounts(best_candidates(h,5,date),.75*budget)
         amounts_risky= get_amounts(best_candidates_risky(h,5,date),budget)
         if amounts_safe == []:
-            while (amounts_safe == []):
-                amounts = get_amounts(best_candidates(h,5,date),.75*budget)
-            safe_bundle(amounts_safe)
+          st.write("Budget too low to generate safe bundle. Please hit 'Apply Preferences' again.")
         else:
             safe_bundle(amounts_safe)
         st.divider()
         if amounts_risky == []:
-            while (amounts_risky == []):
-                amounts = get_amounts(best_candidates_risky(h,5,date),budget)
-            risky_bundle(amounts_risky)
+            st.write("Budget too low to generate risky bundle. Please hit 'Apply Preferences' again.")
         else:
             risky_bundle(amounts_risky)
     st.divider()
@@ -155,7 +147,7 @@ if st.sidebar.button("Apply Preferences"):
     }
 
     for i in range(len(h)):
-        history['Transaction Number'].append(int((h[i][1])[4:]))
+        history['Transaction Number'].append(i+1)
         history['Contract Category'].append(h[i][2])
         history['Contract'].append(h[i][3])
         history['Price'].append(f'{h[i][6]:.2f}')
@@ -164,6 +156,6 @@ if st.sidebar.button("Apply Preferences"):
     
     hist = pd.DataFrame(history)
     st.header("Simulated Purchase History")
-    st.table(history)
+    st.dataframe(hist, hide_index=True)
     
         
