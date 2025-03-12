@@ -13,7 +13,7 @@ st.title("Simulated Bundling Software")
 
 st.sidebar.title("User Preferences")
 history_length = st.sidebar.number_input("Number of Simulated Transactions", min_value=1, step=1)
-budget = st.sidebar.number_input("Spending Budget", min_value=0.01,step = 0.01)
+budget = st.sidebar.number_input("Spending Budget", min_value=1000,step = 0.01)
 risk_level = st.sidebar.selectbox("Trading Risk Level",['Safe','Risky','View Both'])
 
 date = (f"{today.year}-{str(today.month).zfill(2)}-{str(today.day).zfill(2)}")
