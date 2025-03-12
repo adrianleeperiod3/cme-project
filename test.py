@@ -133,14 +133,14 @@ if st.sidebar.button("Apply Preferences"):
         if amounts_safe == []:
             while (amounts_safe == []):
                 amounts = get_amounts(best_candidates(h,5,date),.75*budget)
-            safe_bundle(amounts)
+            safe_bundle(amounts_safe)
         else:
             safe_bundle(amounts_safe)
         st.divider()
         if amounts_risky == []:
             while (amounts_risky == []):
                 amounts = get_amounts(best_candidates_risky(h,5,date),budget)
-            risky_bundle(amounts)
+            risky_bundle(amounts_risky)
         else:
             risky_bundle(amounts_risky)
     st.divider()
