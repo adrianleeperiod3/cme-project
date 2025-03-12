@@ -40,11 +40,20 @@ def generate_prices(b):
     return prices
 
 def trim(l):
-    print(l)
     g = []
     for item,quantity,price in l:
+        cat = ""
+        futures = ["Natural_Gas","Corn","Crude_Oil","S&P500_Call","Gold","S&P500"]
+        options = ["Gold_Put","Oil_Call","Treasury_Put"]
+        agriculture = ["Live_Cattle","Wheat","Soybeans","Lean_Hogs"]
+        if item in futures:
+            cat = "Futures"
+        elif item in options:
+            cat = "Options"
+        else:
+            cat = "Agriculture"
         if len(g) == 0 and quantity != 0:
-            g.append([item,quantity,price])
+            g.append([item,cat,quantity,price])
         else:
             new_item = True
             og_index = 0
@@ -53,11 +62,10 @@ def trim(l):
                     new_item = False
                     og_index = i
             if new_item and quantity != 0:
-                g.append([item,quantity,price])
+                g.append([item,cat,quantity,price])
             else:
                 if len(g) != 0:
-                    g[og_index][1] += quantity
-    print(g)
+                    g[og_index][2] += quantity
     return(g)
 
 def get_amounts(list,budget):

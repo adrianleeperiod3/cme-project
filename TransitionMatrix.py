@@ -140,9 +140,6 @@ def item_candidates(item,int):
             if item_and_prob[1] > avg_prob:
                 list.append(item_and_prob)
         master_list.append(list)
-
-    # for i in range(len(master_list)):
-    #     print(f"Transaction ({i+1}): {master_list[i]}")
     return(master_list)
 
 
