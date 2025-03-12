@@ -20,18 +20,15 @@ for cust,trans,type,item,date,quantity,price,value in data:
 def establish_monthly_patterns():
     master = []
     for temp_item in key:
-        temp_freq_list = [0]*12
+        t = freq_list(temp_item)
+           
         preferred_months = []
         temp_addition = []
-        for cust,trans,type,item,date,quantity,price,value in data:
-            if item == temp_item:
-                temp_freq_list[int(date[5:7])-1] += 1
-           
         augmented_list = []
-        augmented_list.append(temp_freq_list[11])
-        for i in range(len(temp_freq_list)):
-            augmented_list.append(temp_freq_list[i])
-        augmented_list.append(temp_freq_list[0])
+        augmented_list.append(t[11])
+        for i in range(len(t)):
+            augmented_list.append(t[i])
+        augmented_list.append(t[0])
         for i in range (len(augmented_list)-1):
             if i > 0 and augmented_list[i-1] < augmented_list[i] and augmented_list[i] > augmented_list[i+1]:
                 preferred_months.append(i)
@@ -40,7 +37,12 @@ def establish_monthly_patterns():
         master.append(temp_addition)
     return master
 
-
+def freq_list(input_item):
+    list = [0]*12
+    for cust,trans,type,item,date,quantity,price,value in data:
+        if item == input_item:
+            list[int(date[5:7])-1] += 1
+    return list
 
 
     

@@ -42,13 +42,21 @@ def generate_prices(b):
 def trim(l):
     print(l)
     g = []
-    for i in range(len(l)):
-        if l[i][1] != 0:
-            g.append(l[i])  
-        for i in range(len(g)):
-            for j in range(len(g)):
-                if g[i][0] == g[j][0] and i != j:
-                    g.pop(i)
+    for item,quantity,price in l:
+        if len(g) == 0 and quantity != 0:
+            g.append([item,quantity,price])
+        else:
+            new_item = True
+            og_index = 0
+            for i in range(len(g)):
+                if g[i][0] == item:
+                    new_item = False
+                    og_index = i
+            if new_item and quantity != 0:
+                g.append([item,quantity,price])
+            else:
+                if len(g) != 0:
+                    g[og_index][1] += quantity
     print(g)
     return(g)
 
@@ -77,16 +85,14 @@ def get_amounts(list,budget):
         rand_price = round(random.randrange(1)*(max_price-mean_price) + mean_price,2)
         item_and_pricing[i].append(int(((list[i][1]/corr_sum)*budget/rand_price)+.5))
         bundle_price += rand_price*item_and_pricing[i][1]
+        item_and_pricing[i].append(rand_price)
     while(bundle_price > budget):
         if item_and_pricing[len(item_and_pricing)-1][1] == 0:
-            return("Budget Too Low To Support Bundle Purchases")
+            return([])
         else:
             item_and_pricing[len(item_and_pricing)-1][1] -= 1
     f = trim(item_and_pricing)
-    if f == []:
-        return("Budget Too Low To Support Bundle Purchases")
-    else:
-        return(f)
+    return(f)
     
 
 

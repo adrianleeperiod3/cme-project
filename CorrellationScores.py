@@ -80,6 +80,27 @@ def best_candidates(list,future_steps,date):
                 highest_score_index = i
         best_list.append(step[highest_score_index])
     return(best_list)
+
+def best_candidates_risky(list,future_steps,date):
+    seasonality_score = get_seasonality_score(list)
+    current_month = int(date[5:7])
+    patterns = establish_monthly_patterns()
+    most_recent_purchase = list[len(list)-1]
+    candidates = item_candidates(most_recent_purchase[3],future_steps)
+    for step in candidates:
+        for i in range(len(step)):
+            if is_month_max(step[i][0],current_month):
+                step[i][1] = round(step[i][1] + seasonality_score,8)
+    best_list = []
+    for step in candidates:
+        highest_score = 0
+        highest_score_index = 0
+        for i in range(len(step)):
+            if step[i][1] > highest_score:
+                highest_score = step[i][1]
+                highest_score_index = i
+        best_list.append(step[highest_score_index])
+    return(best_list)
         
 
 
